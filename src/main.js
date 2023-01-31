@@ -9,6 +9,22 @@ const layerInfo = [
     color: "blue",
     initialValue: 35,
   },
+  {
+    name: "Percent non-white",
+    layer: "nonwhite",
+    propName: "perc_nw",
+    url: "/data/nonwhite.geojson",
+    color: "red",
+    initialValue: 40,
+  },
+  {
+    name: "Percent speaking English 'less than very well'",
+    layer: "english",
+    propName: "ltvw_perc",
+    url: "/data/engl_ltvw.geojson",
+    color: "yellow",
+    initialValue: 40,
+  },
 ];
 
 const app = new App({
