@@ -86,7 +86,7 @@
     align-items: center;
     width: 100%;
     margin: 10px;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   .key {
     width: 20px;
