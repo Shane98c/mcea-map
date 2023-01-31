@@ -68,15 +68,16 @@
 <style>
   .wrapper {
     display: flex;
+    flex: 1 1 0px;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
     background-color: white;
-    width: fit-content;
     padding: 0.5rem;
+    margin: 5px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
   input[type="range"] {
     width: 100%;
@@ -86,11 +87,11 @@
     align-items: center;
     width: 100%;
     margin: 10px;
-    justify-content: space-around;
+    justify-content: space-evenly;
   }
   .key {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     margin-left: 0.5rem;
     opacity: 0.5;
   }
