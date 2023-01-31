@@ -16,8 +16,8 @@
       zoom: 6.3,
     });
     map.on("load", () => {
-      console.log("map is ready");
       mapReady = true;
+      getData(map);
     });
   }
   const getData = async (map) => {
@@ -44,7 +44,6 @@
 
   onMount(() => {
     createMap();
-    getData(map);
   });
 </script>
 

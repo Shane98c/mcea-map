@@ -2,11 +2,11 @@ import App from "./App.svelte";
 
 const layerInfo = [
   {
-    name: "Percent Population below 200% of Poverty Line",
+    name: "Percent population below 200% of Poverty Line",
     layer: "poverty",
     propName: "perc_lt200",
     url: "/data/poverty_lt_200perc.geojson",
-    color: "blue",
+    color: "#729b6f",
     initialValue: 35,
   },
   {
@@ -14,7 +14,7 @@ const layerInfo = [
     layer: "nonwhite",
     propName: "perc_nw",
     url: "/data/nonwhite.geojson",
-    color: "red",
+    color: "#8d5a99",
     initialValue: 40,
   },
   {
@@ -22,7 +22,7 @@ const layerInfo = [
     layer: "english",
     propName: "ltvw_perc",
     url: "/data/engl_ltvw.geojson",
-    color: "yellow",
+    color: "#e77148",
     initialValue: 40,
   },
 ];

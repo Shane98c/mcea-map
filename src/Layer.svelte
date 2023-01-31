@@ -50,7 +50,10 @@
     class="slider"
     id="myRange"
   />
-  <div>>= {povertyPercent}%</div>
+  <div class="keyWrap">
+    >= {povertyPercent}%
+    <div class="key" style="background-color: {layer.color}" />
+  </div>
 </div>
 
 <style>
@@ -63,5 +66,14 @@
     width: fit-content;
     padding: 0.5rem;
     border-radius: 5px;
+  }
+  .keyWrap {
+    display: flex;
+    align-items: center;
+  }
+  .key {
+    width: 20px;
+    height: 20px;
+    margin-left: 0.5rem;
   }
 </style>
