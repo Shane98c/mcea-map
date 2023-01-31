@@ -20,18 +20,57 @@
       mapReady = true;
     });
   }
+  const getData = async (map) => {
+    const response = await fetch("data/indianCountry.geojson");
+    const data = await response.json();
+    map.addSource("indian-country", {
+      type: "geojson",
+      data: data,
+    });
+
+    map.addLayer(
+      {
+        id: "indian-country",
+        type: "fill",
+        source: "indian-country",
+        paint: {
+          "fill-color": "grey",
+          "fill-opacity": 0.5,
+        },
+      },
+      "waterway-label"
+    );
+  };
+
   onMount(() => {
     createMap();
+    getData(map);
   });
 </script>
 
 <main>
-  {#if mapReady}
-    {#each layerInfo as layer}
-      <Layer {map} {layer} />{/each}
-  {/if}
-  <div id="map" style="width: 100vw; height: 100vh;" />
+  <div class="layerControlers">
+    {#if mapReady}
+      {#each layerInfo as layer}
+        <Layer {map} {layer} />{/each}
+    {/if}
+  </div>
+
+  <div id="map" />
 </main>
 
 <style>
+  #map {
+    width: 100vw;
+    height: 100vh;
+  }
+  .layerControlers {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
 </style>

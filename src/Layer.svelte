@@ -1,8 +1,9 @@
 <script>
   import { onMount } from "svelte";
   export let map;
-  export let povertyPercent = 35;
   export let layer;
+  export let povertyPercent = layer.initialValue;
+
   $: {
     const povertyLayer = map.getLayer("poverty");
     if (povertyLayer) {
@@ -38,18 +39,29 @@
   });
 </script>
 
-<div>{layer.name}</div>
+<div class="wrapper">
+  <div>{layer.name}</div>
 
-<div>>= {povertyPercent}%</div>
-
-<input
-  type="range"
-  min="1"
-  max="100"
-  bind:value={povertyPercent}
-  class="slider"
-  id="myRange"
-/>
+  <input
+    type="range"
+    min="1"
+    max="100"
+    bind:value={povertyPercent}
+    class="slider"
+    id="myRange"
+  />
+  <div>>= {povertyPercent}%</div>
+</div>
 
 <style>
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    background-color: aliceblue;
+    width: fit-content;
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
 </style>
