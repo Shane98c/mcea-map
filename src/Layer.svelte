@@ -62,10 +62,15 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    background-color: aliceblue;
+    background-color: white;
     width: fit-content;
     padding: 0.5rem;
     border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 0.9rem;
+  }
+  input {
+    width: 100%;
   }
   .keyWrap {
     display: flex;
@@ -75,5 +80,6 @@
     width: 20px;
     height: 20px;
     margin-left: 0.5rem;
+    opacity: 0.5;
   }
 </style>

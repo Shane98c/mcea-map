@@ -11,8 +11,8 @@
   async function createMap() {
     map = new mapboxgl.Map({
       container: "map",
-      style: "mapbox://styles/mapbox/dark-v11",
-      center: [-93.6, 45.6568],
+      style: "mapbox://styles/mapbox/light-v11",
+      center: [-93.6, 46.2568],
       zoom: 6.3,
     });
     map.on("load", () => {
@@ -65,7 +65,7 @@
   }
   .layerControlers {
     position: absolute;
-    top: 0;
+    top: 10px;
     z-index: 1;
     border-radius: 10px;
     width: 100%;
