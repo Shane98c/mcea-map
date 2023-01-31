@@ -2,12 +2,18 @@
   import { onMount } from "svelte";
   export let map;
   export let layer;
-  export let povertyPercent = layer.initialValue;
+  export let currentPercent = layer.initialValue;
+  export let visible = true;
 
   $: {
-    const povertyLayer = map.getLayer("poverty");
-    if (povertyLayer) {
-      map.setFilter(layer.layer, [">=", layer.propName, povertyPercent]);
+    const currentLayer = map.getLayer(layer.layer);
+    if (currentLayer) {
+      map.setFilter(layer.layer, [">=", layer.propName, currentPercent]);
+      map.setLayoutProperty(
+        layer.layer,
+        "visibility",
+        visible ? "visible" : "none"
+      );
     }
   }
 
@@ -31,7 +37,7 @@
       },
       "waterway-label"
     );
-    map.setFilter(layer.layer, [">=", layer.propName, povertyPercent]);
+    map.setFilter(layer.layer, [">=", layer.propName, currentPercent]);
   };
 
   onMount(() => {
@@ -46,13 +52,16 @@
     type="range"
     min="1"
     max="100"
-    bind:value={povertyPercent}
+    bind:value={currentPercent}
     class="slider"
     id="myRange"
   />
   <div class="keyWrap">
-    >= {povertyPercent}%
     <div class="key" style="background-color: {layer.color}" />
+    <div>
+      over <b>{currentPercent}%</b>
+    </div>
+    <input type="checkbox" bind:checked={visible} />
   </div>
 </div>
 
@@ -69,12 +78,15 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     font-size: 0.9rem;
   }
-  input {
+  input[type="range"] {
     width: 100%;
   }
   .keyWrap {
     display: flex;
     align-items: center;
+    width: 100%;
+    margin: 10px;
+    justify-content: space-between;
   }
   .key {
     width: 20px;
