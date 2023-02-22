@@ -72,12 +72,17 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    background-color: white;
-    padding: 0.5rem;
-    margin: 5px;
+    background-color: #fefefe;
+    padding: 0.25rem;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     font-size: 0.8rem;
+    text-align: center;
+    margin: 0.25rem;
+    margin-bottom: 0;
+  }
+  input {
+    cursor: pointer;
   }
   input[type="range"] {
     width: 100%;
@@ -86,7 +91,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    margin: 10px;
+    margin: 3px;
     justify-content: space-evenly;
   }
   .key {
