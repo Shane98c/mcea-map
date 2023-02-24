@@ -1,46 +1,32 @@
 <script>
   import { onMount } from "svelte";
+  import mapboxgl from "mapbox-gl";
+
   import Layer from "./Layer.svelte";
+
   export let map;
   export let mapReady = false;
-  export let layerInfo;
+  export let layers;
+  export let staticLayers;
 
-  import mapboxgl from "mapbox-gl";
   mapboxgl.accessToken =
     "pk.eyJ1Ijoic2hhbmU5OGMiLCJhIjoiY2xkamNyb3djMXBtMTNybnc5MG5wNDd4byJ9.Xvs-kS3oryfGJtCR7KVqqQ";
-  async function createMap() {
+  const popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false,
+  });
+
+  function createMap() {
     map = new mapboxgl.Map({
       container: "map",
-      style: "mapbox://styles/mapbox/dark-v11",
-      center: [-93.6, 45.6568],
+      style: "mapbox://styles/mapbox/light-v11",
+      center: [-93.6, 46.2568],
       zoom: 6.3,
     });
     map.on("load", () => {
       mapReady = true;
-      getData(map);
     });
   }
-  const getData = async (map) => {
-    const response = await fetch("data/indianCountry.geojson");
-    const data = await response.json();
-    map.addSource("indian-country", {
-      type: "geojson",
-      data: data,
-    });
-
-    map.addLayer(
-      {
-        id: "indian-country",
-        type: "fill",
-        source: "indian-country",
-        paint: {
-          "fill-color": "grey",
-          "fill-opacity": 0.5,
-        },
-      },
-      "waterway-label"
-    );
-  };
 
   onMount(() => {
     createMap();
@@ -48,14 +34,21 @@
 </script>
 
 <main>
-  <div class="layerControlers">
-    {#if mapReady}
-      {#each layerInfo as layer}
-        <Layer {map} {layer} />{/each}
-    {/if}
-  </div>
-
   <div id="map" />
+  {#if mapReady}
+    <div class="layerControllerWrapper">
+      <div class="layerControllers">
+        {#each layers as layer}
+          <Layer {popup} {map} {layer} />
+        {/each}
+      </div>
+      <div class="layerControllers">
+        {#each staticLayers as layer}
+          <Layer {popup} {map} {layer} />
+        {/each}
+      </div>
+    </div>
+  {/if}
 </main>
 
 <style>
@@ -63,13 +56,16 @@
     width: 100vw;
     height: 100vh;
   }
-  .layerControlers {
+  .layerControllerWrapper {
     position: absolute;
-    top: 0;
-    z-index: 1;
+    top: 0.25rem;
+    width: 100%;
+  }
+  .layerControllers {
     border-radius: 10px;
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    color: #444444;
   }
 </style>
