@@ -9,6 +9,7 @@ const layers = [
     url: "data/poverty_lt_200perc.geojson",
     color: "#729b6f",
     initialValue: 35,
+    visible: true,
   },
   {
     name: "Non-white",
@@ -18,6 +19,7 @@ const layers = [
     url: "data/nonwhite.geojson",
     color: "#8d5a99",
     initialValue: 40,
+    visible: true,
   },
   {
     name: "Speak English 'less than very well'",
@@ -27,6 +29,7 @@ const layers = [
     url: "data/engl_ltvw.geojson",
     color: "#e77148",
     initialValue: 40,
+    visible: true,
   },
 ];
 const staticLayers = [
@@ -39,6 +42,7 @@ const staticLayers = [
     color: "grey",
     initialValue: null,
     static: true,
+    visible: true,
   },
   {
     name: "Major air permit locations (MPCA)",
@@ -50,6 +54,35 @@ const staticLayers = [
     initialValue: null,
     static: true,
     link: "https://www.pca.state.mn.us/business-with-us/part-70-manufacturing-general-permit",
+    visible: true,
+  },
+  {
+    name: "MN Senate Districts",
+    layer: "senate-districts",
+    propName: null,
+    type: "polygon",
+    alsoType: "line",
+    url: "data/senate22.geojson",
+    color: "rgba(0,0,0,0)",
+    alsoColor: "#444444",
+    initialValue: null,
+    static: true,
+    link: null,
+    visible: false,
+  },
+  {
+    name: "MN House Districts",
+    layer: "house-districts",
+    propName: null,
+    type: "polygon",
+    alsoType: "line",
+    url: "data/house22.geojson",
+    color: "rgba(0,0,0,0)",
+    alsoColor: "#444444",
+    initialValue: null,
+    static: true,
+    link: null,
+    visible: false,
   },
 ];
 
