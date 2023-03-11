@@ -3,7 +3,7 @@
   export let map;
   export let layer;
   export let currentPercent = layer.initialValue;
-  export let visible = true;
+  export let visible = layer.visible;
   export let keyOpacity = 0.6;
   export let popup;
   export let hoverLayer = false;
@@ -20,6 +20,12 @@
         "visibility",
         visible ? "visible" : "none"
       );
+      layer.alsoType &&
+        map.setLayoutProperty(
+          layer.layer + "-line",
+          "visibility",
+          visible ? "visible" : "none"
+        );
     }
   }
 
@@ -62,6 +68,31 @@
         "airport-label"
       );
     }
+    if (layer.alsoType === "line") {
+      map.addLayer(
+        {
+          id: layer.layer + "-line",
+          type: "line",
+          source: layer.layer,
+          paint: {
+            "line-color": layer.alsoColor,
+            "line-width": 1,
+          },
+        },
+        "waterway-label"
+      );
+    }
+    map.setLayoutProperty(
+      layer.layer,
+      "visibility",
+      visible ? "visible" : "none"
+    );
+    layer.alsoType &&
+      map.setLayoutProperty(
+        layer.layer + "-line",
+        "visibility",
+        visible ? "visible" : "none"
+      );
     !layer.static &&
       map.setFilter(layer.layer, [">=", layer.propName, currentPercent]);
   };
@@ -83,15 +114,41 @@
   onMount(() => {
     getData(map);
     const mapContainer = map.getCanvas();
-    map.on("mouseenter", "air-permits", function (e) {
-      mapContainer.style.cursor = "pointer";
-      const name = e.features[0].properties["Master AI Name"];
-      popup.setLngLat(e.lngLat).setHTML(name).addTo(map);
-    });
-    map.on("mouseleave", "air-permits", function () {
-      mapContainer.style.cursor = "";
-      popup.remove();
-    });
+    // map.on("mouseenter", "air-permits", function (e) {
+    //   mapContainer.style.cursor = "pointer";
+    //   const name = e.features[0].properties["Master AI Name"];
+    //   popup.setLngLat(e.lngLat).setHTML(name).addTo(map);
+    // });
+    map.on(
+      "mousemove",
+      ["house-districts", "senate-districts", "air-permits"],
+      function (e) {
+        mapContainer.style.cursor = "pointer";
+        //if source of any feature is air-permits, show only that name
+        if (e.features.some((feature) => feature.source === "air-permits")) {
+          const name =
+            "MPCA air permit for -<br><b>" +
+            e.features[0].properties["Master AI Name"] +
+            "</b>";
+          popup.setLngLat(e.lngLat).setHTML(name).addTo(map);
+          return;
+        }
+        let name = "";
+        e.features.map((feature) => {
+          name += feature.source === "house-districts" ? "House  " : "Senate  ";
+          name += "<b>" + feature.properties["DISTRICT"] + "</b><br>";
+        });
+        popup.setLngLat(e.lngLat).setHTML(name).addTo(map);
+      }
+    );
+    map.on(
+      "mouseleave",
+      ["house-districts", "senate-districts", "air-permits"],
+      function () {
+        mapContainer.style.cursor = "";
+        popup.remove();
+      }
+    );
 
     map.on("mouseenter", layer.layer, () => {
       hoverLayer = true;
@@ -109,16 +166,17 @@
     : null}"
   on:mouseenter={() => flashLayer(0.8)}
   on:mouseleave={() => flashLayer(0.6)}
-  on:focus={() => flashLayer()}
 >
   <div class="keyWrap">
-    <div
-      class="key"
-      style="opacity: {keyOpacity}; background-color: {layer.color};  {layer.type ===
-      'point'
-        ? 'border-radius: 10px;'
-        : 'border-radius: 2px;'}"
-    />
+    {#if !layer.alsoType}
+      <div
+        class="key"
+        style="opacity: {keyOpacity}; background-color: {layer.color};  {layer.type ===
+        'point'
+          ? 'border-radius: 10px;'
+          : 'border-radius: 2px;'}"
+      />
+    {/if}
     <input type="checkbox" bind:checked={visible} />
   </div>
   {#if !layer.static}
